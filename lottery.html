@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>lottery Sim</title>
+    <style type="text/css">
+      * {
+        background-color: #ffd166;
+        font-family: 'Luckiest Guy';
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+
+      }
+      
+      h1 {
+        text-align:center;
+        font-size: 40px;
+        text-decoration: underline;
+      }
+      .player_num {
+        font-size: 60px;
+      }
+      
+      .payout {
+        font-size: 90px;
+        color: #fff;
+        text-shadow:   0px -6px 0 #212121,  
+                       0px -6px 0 #212121,
+                       0px  6px 0 #212121,
+                       0px  6px 0 #212121,
+                      -6px  0px 0 #212121,  
+                       6px  0px 0 #212121,
+                      -6px  0px 0 #212121,
+                       6px  0px 0 #212121,
+                      -6px -6px 0 #212121,  
+                       6px -6px 0 #212121, 
+                      -6px  6px 0 #212121,
+                       6px  6px 0 #212121,
+                      -6px  18px 0 #212121,
+                       0px  18px 0 #212121,
+                       6px  18px 0 #212121,
+                       0 19px 1px rgba(0,0,0,.1),
+                       0 0 6px rgba(0,0,0,.1),
+                       0 6px 3px rgba(0,0,0,.3),
+                       0 12px 6px rgba(0,0,0,.2),
+                       0 18px 18px rgba(0,0,0,.25),
+                       0 24px 24px rgba(0,0,0,.2),
+                       0 36px 36px rgba(0,0,0,.15);
+      }
+      
+      .result{
+        font-size: 40pt;
+        text-decoration: underline;
+               }
+      
+    </style> 
+  </head> 
+  <body> 
+    
+    <h1>Play Lottery Today! </h1>
+
+    
+    <script language="javascript"> 
+      
+      //set the winning number
+      var my_nums = [];
+      for (i = 0; i < 5; i++){
+          my_nums[i] = Math.floor(Math.random() * (48-1+1) + 1);
+      }
+      winning_num = my_nums.sort();
+      
+      //set the lucky ball number
+      var lucky_num;
+      lucky_num = Math.floor(Math.random() * (48-1+1) + 1);
+      // document.write(lucky_num)
+      
+      //prompt the user for 5 winning number
+      //delete the repetitive elements in the array
+      player_input = prompt ("First, select 5 numbers between 1-48: ", "");
+      player_input_splited = player_input.split(" ");
+      
+      var player_nums = [];
+      player_input_splited.forEach((c) => {
+          if (!player_nums.includes(c)){
+              player_nums.push(c);
+          }
+      });
+      // document.write(player_nums);
+      
+      //display the player's 5 winning numbers using a loop
+      document.write("<span class='player_num'> Here are the five winning numbers you have entered: </span>");
+      for (i = 0; i < 5; i++){
+        document.write("<span class='player_num'> " + player_input_splited[i] + " </span>");
+      }
+      document.write("<br>")
+      
+      //prompt the user for a lucky ball number
+      var player_lucky;
+      player_lucky = prompt ("Now, please enter a number from 1-48 as your lucky ball number: ", "");
+      document.write("<span class='player_num'> You have entered: " + player_lucky + " as your lucky ball number. </span>")
+      document.write("<br>")
+      
+      //if the user wins the lucky ball number
+      var win_lucky = Boolean(lucky_num == player_lucky);
+      // document.write("bool test " + win_lucky);
+      
+      //calculate the payout
+      count = 0;
+      for (i = 0; i < 5; i++){
+          for (j = 0; j < 5; j++){
+            //count match of winning numbers
+            if (winning_num[i] == player_nums[j]){
+                count += 1;
+                // document.write("winning num are " + winning_num[i] + "player_nums are " + player_nums[i] + "count is " + count);
+              }
+          }
+      }
+      
+      function displayWinning(){
+          document.write("<span class='result'> Our 5 winning numbers are: </span>");
+          for (i = 0; i < 5; i++){
+              document.write("<span class='result'> " + winning_num[i] + " </span>")
+          }
+          document.write("<br>");
+          document.write("<span class='result'> Our lucky ball number is: " + lucky_num + "</span>");
+      }
+      
+      //Display the payout
+      //5+lucky ball
+      if(count == 5 && win_lucky == true){
+          document.write("<span class='payout'> You won " + count + " winning numbers and you ALSO matched the lucky ball number!</span>")
+          document.write("<br>")
+          document.write("<span class='payout'> Congrats! You have won: $7,000 and a WEEK for LIFE!</span>")
+
+      }
+      //5
+      if(count == 5 && win_lucky == false){
+          document.write("<span class='payout'> You won " + count + " winning numbers but you did not match the lucky ball number!</span>")
+          document.write("<br>")
+          document.write("<span class='payout'> Congrats! You have won: $25,000 and a YEAR for LIFE!</span>")
+      }
+      
+      //4+lucky ball
+      if(count == 4 && win_lucky == true){
+          document.write("<span class='payout'> You won " + count + " winning numbers and you ALSO matched the lucky ball number!</span>")
+          document.write("<br>")
+          document.write("<span class='payout'> Congrats! You have won: $5,000!</span>")
+      }
+      //4
+      if(count == 4 && win_lucky == false){
+          document.write("<span class='payout'> You won " + count + " winning numbers but you did not match the lucky ball number!</span>")
+          document.write("<br>")
+          document.write("<span class='payout'> Congrats! You have won: $200!</span>")
+      }
+      
+      //3+lucky ball
+      if(count == 3 && win_lucky == true){
+          document.write("<span class='payout'> You won " + count + " winning numbers and you ALSO matched the lucky ball number!</span>")
+          document.write("<br>")
+          document.write("<span class='payout'> Congrats! You have won: $150!</span>")
+      }
+      //3
+      if(count == 3 && win_lucky == false){
+          document.write("<span class='payout'> You won " + count + " winning numbers but you did not match the lucky ball number!</span>")
+          document.write("<br>")
+          document.write("<span class='payout'> Congrats! You have won: $20!</span>")
+      }
+      
+      //2+lucky ball
+      if(count == 2 && win_lucky == true){
+          document.write("<span class='payout'> You won " + count + " winning numbers and you ALSO matched the lucky ball number!</span>")
+          document.write("<br>")
+          document.write("<span class='payout'> Congrats! You have won: $25!</span>")
+      }
+      //2
+      if(count == 2 && win_lucky == false){
+          document.write("<span class='payout'> You won " + count + " winning numbers but you did not match the lucky ball number!</span>")
+          document.write("<br>")
+          document.write("<span class='payout'> Congrats! You have won: $3!</span>")
+      }
+      
+      //1+lucky ball
+      if(count == 1 && win_lucky == true){
+          document.write("<span class='payout'> You won " + count + " winning numbers and you ALSO matched the lucky ball number!</span>")
+          document.write("<br>")
+          document.write("<span class='payout'> Congrats! You have won: $6!</span>")
+      }
+      //1
+      if(count == 1 && win_lucky == false){
+          document.write("<span class='payout'> You won " + count + " winning numbers but you did not match the lucky ball number!</span>")
+          document.write("<br>")
+          document.write("<span class='payout'> Congrats! You have won: $4!</span>")
+      }
+      
+      //0+lucky ball
+      if(count == 0 && win_lucky == true){
+          document.write("<span class='payout'> You won " + count + " winning numbers but you matched the lucky ball number!</span>")
+          document.write("<br>")
+          document.write("<span class='payout'> Congrats! You have won: $4!</span>")
+      }
+      //0
+      if(count == 0 && win_lucky == false){
+          document.write("<span class='payout'> You won " + count + " winning numbers and you did not match the lucky ball number.</span>")
+          document.write("<br>")
+          document.write("<span class='payout'> You have won $0 this time, but welcome to try again!</span>")
+      }
+      
+      document.write("<br>");
+      displayWinning();
+      
+    </script> 
+  </body> 
+</html>
